@@ -1,0 +1,13 @@
+p style="color: green" = notice
+
+h1 Units
+
+#units
+  - @units.each do |unit|
+    == render unit
+    p
+      = link_to 'Show this shelf unit', unit
+
+hr
+
+= link_to 'Design new shelf unit', new_unit_path

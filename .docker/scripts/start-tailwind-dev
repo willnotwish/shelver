@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "Running Tailwind in watch mode"
+exec bundle exec rails tailwindcss:watch

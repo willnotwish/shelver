@@ -1,0 +1,84 @@
+# Set BASE_FOLDER env var vefore using this file
+
+services:
+  webapp:
+    stdin_open: true
+    tty: true
+    image: willnotwish/ruby:3.1.2
+    command: .docker/scripts/start-dev
+    volumes:
+      - ${BASE_FOLDER}:/app
+      - bundle-cache:/usr/local/bundle
+    environment:
+      RAILS_ENV: development
+      BUNDLER_VERSION: '2.3.24'
+      MYSQL_HOST: db
+      MYSQL_DATABASE: shelver_development
+    ports:
+      - "6001:3000"
+    user: nick
+    depends_on:
+      - redis
+      - db
+
+  tailwind:
+    stdin_open: true
+    tty: true
+    image: willnotwish/ruby:3.1.2
+    command: .docker/scripts/start-tailwind-dev
+    volumes:
+      - ${BASE_FOLDER}:/app
+      - bundle-cache:/usr/local/bundle
+    environment:
+      RAILS_ENV: development
+      BUNDLER_VERSION: '2.3.24'
+    user: nick
+
+  # stocker-sidekiq:
+  #   image: willnotwish/ruby:3.1.2
+  #   command: .docker/scripts/start-sidekiq-dev
+  #   depends_on:
+  #     - stocker
+  #     - redis
+
+  redis:
+    image: redis:alpine
+    volumes:
+      - redis:/data
+    ports:
+      - "6003:6379"
+
+  solargraph:
+    stdin_open: true
+    tty: true
+    image: willnotwish/ruby:3.1.2
+    command: solargraph socket --host=0.0.0.0 --port=8091
+    ports:
+      - "8091:8091"
+    volumes:
+      - ${BASE_FOLDER}:/app
+      - bundle-cache:/usr/local/bundle
+    user: nick
+
+  db:
+    image: mysql
+    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+    # (this is just an example, not intended to be a production configuration)
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: shelver_development
+    volumes:
+      - ${BASE_FOLDER}/db/data/development/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ${BASE_FOLDER}/db/data/development/var/lib/mysql:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8082:8080
+
+volumes:
+  bundle-cache:
+  redis:

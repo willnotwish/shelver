@@ -1,0 +1,19 @@
+default: &default
+  adapter: mysql2
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host:  <%= ENV.fetch("MYSQL_HOST") { 'db' } %>
+  username: root
+  password: root
+  timeout: 5000
+
+development:
+  <<: *default
+  database: <%= ENV.fetch("MYSQL_DATABASE") { 'shelver_development' } %>
+
+test:
+  <<: *default
+  database: <%= ENV.fetch("MYSQL_DATABASE") { 'shelver_test' } %>
+
+production:
+  <<: *default
+  database: <%= ENV.fetch("MYSQL_DATABASE") { 'shelver_production' } %>

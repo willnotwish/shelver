@@ -1,0 +1,28 @@
+h3.font-bold.text-xl Shelving unit
+
+p style="color: green" = notice
+
+.mt-4
+  h4.font-bold Dimensions
+  == render @unit
+
+.mt-4
+  h4.font-bold Shelves
+  p #{@unit.shelf_count} shelves, each #{@unit.shelf_width} wide
+  p Vertical spacing (if uniformly distributed): #{@unit.uniform_shelf_spacing}
+
+.mt-4
+  h4.font-bold Material needed
+  = render Units::SheetMaterialComponent.new(unit: @unit)
+
+.mt-4
+  h4.font-bold Preview
+  .mt-4
+    = render UnitPreviewComponent.new(unit: @unit)
+
+.mt-8
+  => link_to "Edit", edit_unit_path(@unit)
+  '|
+  =< link_to "List", units_path
+
+  = button_to 'Delete', @unit, method: :delete, class: 'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4'

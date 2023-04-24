@@ -1,0 +1,5 @@
+div id="#{dom_id unit}"
+  p Code: #{unit.code}
+  p Material: #{link_to(unit.sheet&.name, unit.sheet)}
+  p Outer dimensions: #{unit.width} (w) x #{unit.height} (h) x #{unit.depth} (d)
+  p Offsets: #{unit.offset_top} (top), #{unit.offset_bottom} (bottom)

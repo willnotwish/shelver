@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo "Removing PID"
+rm -rf tmp/pids
+
+echo "Starting server"
+exec bundle exec rails s -b 0.0.0.0

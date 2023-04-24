@@ -1,0 +1,11 @@
+p style="color: green" = notice
+
+h1 Sheet material
+
+#sheets
+  - @sheets.each do |sheet|
+    == render sheet
+    p
+      = link_to "Show this sheet", sheet
+
+= link_to "New sheet", new_sheet_path

@@ -1,0 +1,18 @@
+= simple_form_for(@unit) do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .form-inputs
+    = f.association :sheet, label: 'Sheet material'
+    = f.input :code
+    = f.input :width
+    = f.input :height
+    = f.input :offset_top
+    = f.input :offset_bottom
+    = f.input :depth
+    = f.input :shelf_count
+
+  .form-actions
+    = f.button :submit
+
+p All dimensions in mm
