@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_25_135003) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_26_161404) do
   create_table "composite_units", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "unit_id", null: false
     t.bigint "composite_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "orientation", default: 0
+    t.integer "position", default: 100
     t.index ["composite_id"], name: "index_composite_units_on_composite_id"
     t.index ["unit_id"], name: "index_composite_units_on_unit_id"
   end
