@@ -1,0 +1,36 @@
+nav.mb-4
+  => link_to 'List all composites', composites_path, class: 'hover:underline text-orange-500'
+
+= render PageTitleComponent.new(page_title: @composite.name)
+
+.mt-8
+  - @composite.horizontal_units.each do |unit|
+    - scaled_unit_width = unit.width/3
+    - scaled_unit_height = unit.height/3
+    .float-left.ml-px(style = "width: #{scaled_unit_width}px; height: #{scaled_unit_height}px")
+      = link_to(unit) do
+        = render Units::PreviewComponent.new(unit:)
+  .clear-left
+
+/ .mt-8.clear-left
+/   h4.font-bold Vertical units
+/   - if @composite.vertical_units.none?
+/     p None
+/   - else
+/     - @composite.vertical_units.each do |unit|
+/       .mt-4
+/         = render Units::OverviewComponent.new(unit:)
+/         = render Units::DimensionsComponent.new(unit:)
+
+.mt-8
+  h4.font-bold Dimensions (max)
+  div id="#{dom_id @composite}"
+    p #{@composite.max_width} (w) x #{@composite.max_height} (h) x #{@composite.max_depth} (d)
+
+.mt-8
+  h4.font-bold.mb-4 Panels
+  = render Composites::CuttingListComponent.new(composite: @composite)
+
+nav.mt-24
+  h4.text-red-500.mt-8.border-t.pt-4 Danger zone
+  = button_to 'Delete', @composite, method: :delete, class: 'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4'

@@ -1,13 +1,9 @@
-p style="color: green" = notice
+= render PageTitleComponent.new(page_title: 'Units')
 
-h1 Units
-
-#units
+#units.grid.grid-cols-2
   - @units.each do |unit|
-    == render unit
-    p
-      = link_to 'Show this shelf unit', unit
+    .mb-4= render Units::OverviewComponent.new(unit:)
+    .mb-4= render Units::DimensionsComponent.new(unit:)
 
-hr
-
-= link_to 'Design new shelf unit', new_unit_path
+.nav-mt-8.border-t.py-4
+  = link_to 'Design new unit', new_unit_path, class: 'text-orange-500 hover:underline'

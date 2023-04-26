@@ -1,30 +1,13 @@
-= form_with(model: @sheet) do |form|
-  - if @sheet.errors.any?
-    div style="color: red"
-      h2 = "#{pluralize(@sheet.errors.count, "error")} prohibited this sheet from being saved:"
-      ul
-        - @sheet.errors.each do |error|
-          li = error.full_message
+= simple_form_for(sheet) do |form_builder|
+  = form_builder.error_notification
+  = form_builder.error_notification message: form_builder.object.errors[:base].to_sentence if form_builder.object.errors[:base].present?
 
-  div
-    = form.label :thickness, style: "display: block"
-    = form.number_field :thickness
+  .form-inputs.mt-8
+    = form_builder.input :thickness
+    = form_builder.input :width
+    = form_builder.input :length
+    = form_builder.input :name
+    = form_builder.input :description
 
-  div
-    = form.label :width, style: "display: block"
-    = form.number_field :width
-
-  div
-    = form.label :length, style: "display: block"
-    = form.number_field :length
-
-  div
-    = form.label :description, style: "display: block"
-    = form.text_area :description
-
-  div
-    = form.label :name, style: "display: block"
-    = form.text_field :name
-
-  div
-    = form.submit
+  .form-actions.mt-8
+    = form_builder.button :submit

@@ -1,28 +1,35 @@
-h3.font-bold.text-xl Shelving unit
+== render PageTitleComponent.new(page_title: @unit.name)
 
-p style="color: green" = notice
-
-.mt-4
-  h4.font-bold Dimensions
-  == render @unit
-
-.mt-4
-  h4.font-bold Shelves
-  p #{@unit.shelf_count} shelves, each #{@unit.shelf_width} wide
-  p Vertical spacing (if uniformly distributed): #{@unit.uniform_shelf_spacing}
-
-.mt-4
-  h4.font-bold Material needed
-  = render Units::SheetMaterialComponent.new(unit: @unit)
-
-.mt-4
-  h4.font-bold Preview
+.grid.grid-cols-2.gap-2
   .mt-4
-    = render UnitPreviewComponent.new(unit: @unit)
+    h4.font-bold Overview
+    == render Units::OverviewComponent.new(unit: @unit)
 
-.mt-8
-  => link_to "Edit", edit_unit_path(@unit)
+  .mt-4
+    h4.font-bold Dimensions
+    == render Units::DimensionsComponent.new(unit: @unit)
+
+  .mt-4
+    h4.font-bold Shelves
+    == render Units::ShelvesComponent.new(unit: @unit)
+
+  .mt-4
+    h4.font-bold Sheet material
+    == render Units::SheetMaterialComponent.new(unit: @unit)
+
+.mt-12
+  == render Units::PreviewComponent.new(unit: @unit)
+
+.mt-8 
+  h4.font-bold Usage
+  - @unit.composites.each do |c| 
+    => link_to(c.name, c, class: 'text-orange-500 hover:underline')
+
+nav.mt-8
+  => link_to 'Edit', edit_unit_path(@unit)
   '|
-  =< link_to "List", units_path
+  =< link_to 'List', units_path
 
   = button_to 'Delete', @unit, method: :delete, class: 'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4'
+
+/ vests & pyjamas

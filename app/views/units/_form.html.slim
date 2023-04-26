@@ -1,18 +1,18 @@
-= simple_form_for(@unit) do |f|
-  = f.error_notification
-  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+= simple_form_for(unit) do |form_builder|
+  = form_builder.error_notification
+  = form_builder.error_notification message: form_builder.object.errors[:base].to_sentence if form_builder.object.errors[:base].present?
 
-  .form-inputs
-    = f.association :sheet, label: 'Sheet material'
-    = f.input :code
-    = f.input :width
-    = f.input :height
-    = f.input :offset_top
-    = f.input :offset_bottom
-    = f.input :depth
-    = f.input :shelf_count
+  .form-inputs.mt-8
+    = form_builder.association :sheet, label: 'Material'
+    = form_builder.input :code
+    = form_builder.input :width
+    = form_builder.input :height
+    = form_builder.input :offset_top
+    = form_builder.input :offset_bottom
+    = form_builder.input :depth
+    = form_builder.input :shelf_count
 
-  .form-actions
-    = f.button :submit
+  .form-actions.mt-8
+    = form_builder.button :submit
 
-p All dimensions in mm
+p.text-xs.my-8 All dimensions in mm

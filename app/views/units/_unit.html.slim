@@ -1,5 +1,8 @@
-div id="#{dom_id unit}"
-  p Code: #{unit.code}
-  p Material: #{link_to(unit.sheet&.name, unit.sheet)}
+.mb-4 id="#{dom_id unit}"
+  h5.font-bold.mt-4 General
+  p Code: #{link_to(unit.code, unit, class: 'underline')}
+  p Material: #{link_to(unit.sheet&.name, unit.sheet, class: 'underline')}
+  
+  h5.font-bold.mt-4 Size
   p Outer dimensions: #{unit.width} (w) x #{unit.height} (h) x #{unit.depth} (d)
   p Offsets: #{unit.offset_top} (top), #{unit.offset_bottom} (bottom)

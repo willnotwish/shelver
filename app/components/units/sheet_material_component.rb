@@ -1,13 +1,9 @@
 # frozen_string_literal: true
 
 module Units
-  class SheetMaterialComponent < ViewComponent::Base
-    attr_reader :unit
-
-    def initialize(unit:)
-      @unit = unit
-    end
-
+  class SheetMaterialComponent < BaseComponent
+    include LinkTo
+    
     delegate :shelf_width, :shelf_depth, :shelf_count, :sheet, to: :unit
     delegate :height, :depth, to: :unit, prefix: true
     

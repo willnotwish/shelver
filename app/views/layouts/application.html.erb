@@ -11,8 +11,9 @@
   </head>
 
   <body>
-    <header class="container mx-auto p-5 italic border-b">Nick's Shelver App</header>
+    <header class="container mx-auto p-5 italic border-b"><%= link_to "Nick's Shelver App", root_path, class: 'hover:underline' %></header>
     <main class="container mx-auto mt-10 px-5">
+      <%= render FlashNoticeComponent.new(text: notice) %>
       <%= yield %>
     </main>
   </body>
