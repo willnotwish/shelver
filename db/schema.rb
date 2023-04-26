@@ -10,7 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_22_152324) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_25_135003) do
+  create_table "composite_units", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "unit_id", null: false
+    t.bigint "composite_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "orientation", default: 0
+    t.index ["composite_id"], name: "index_composite_units_on_composite_id"
+    t.index ["unit_id"], name: "index_composite_units_on_unit_id"
+  end
+
+  create_table "composites", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "panels", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "x"
+    t.integer "y"
+    t.bigint "sheet_id", null: false
+    t.string "label"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sheet_id"], name: "index_panels_on_sheet_id"
+  end
+
   create_table "sheets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "thickness"
     t.integer "width"
@@ -32,8 +60,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_22_152324) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "depth"
+    t.string "name"
+    t.text "description"
     t.index ["sheet_id"], name: "index_units_on_sheet_id"
   end
 
+  add_foreign_key "composite_units", "composites"
+  add_foreign_key "composite_units", "units"
+  add_foreign_key "panels", "sheets"
   add_foreign_key "units", "sheets"
 end

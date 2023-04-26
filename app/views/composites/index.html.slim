@@ -1,0 +1,10 @@
+= render PageTitleComponent.new(page_title: 'Composites')
+
+#composites
+  - @composites.each do |composite|
+    .row.my-8
+      == render composite
+      = link_to 'show', composite, class: 'underline text-orange-400'
+
+
+= link_to 'Design new composite', new_composite_path, class: 'underline text-orange-400'

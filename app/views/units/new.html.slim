@@ -1,7 +1,6 @@
-h1 Specify new unit
+== render PageTitleComponent.new(page_title: 'Design new unit')
 
-== render "form", unit: @unit
+== render 'form', unit: @unit
 
-hr
-
-= link_to 'Back to all shelving units', units_path
+nav.mt-8
+  == link_to 'Cancel', units_path, class: 'text-orange-700 hover:underline'

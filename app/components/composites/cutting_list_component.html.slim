@@ -1,0 +1,23 @@
+table.mb-4
+  thead
+    tr
+      th Qty
+      th Size
+  tbody
+    - quantified_panels.each do |size, quantity|
+      tr
+        td.p-2= quantity
+        td.p-2= size.to_s
+
+/ table.mb-4
+/   thead
+/     tr
+/       th Label
+/       th X
+/       th Y  
+/   tbody
+/     - panels.each do |panel|
+/       tr
+/         td.p-2= panel.label
+/         td.p-2.text-right= panel.x
+/         td.p-2.text-right= panel.y

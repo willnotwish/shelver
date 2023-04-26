@@ -1,8 +1,6 @@
-h1 New sheet
+== render PageTitleComponent.new(page_title: 'Specify sheet material')
 
-== render "form", sheet: @sheet
+== render 'form', sheet: @sheet
 
-br
-
-div
-  = link_to "Back to sheets", sheets_path
+nav.mt-8
+  == link_to 'Cancel', sheets_path, class: 'text-orange-700 hover:underline'

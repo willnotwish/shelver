@@ -1,0 +1,6 @@
+.grid.grid-cols-1.gap-2.px-2.bg-slate-400(style = dynamic_unit_style)
+  .bg-white(style = dynamic_style(kind: :top_void))
+  - shelf_count.times do |i|
+    .bg-white.relative(style = dynamic_style(kind: :shelf))
+      .absolute.inset-x-0.bottom-0.text-center.text-xs #{"#{unit_code}.S#{shelf_count - i}"}
+  .bg-white(style = dynamic_style(kind: :bottom_void))
