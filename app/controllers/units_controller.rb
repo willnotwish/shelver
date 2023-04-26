@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
+# RESTful Unit actions
 class UnitsController < ApplicationController
-  before_action :set_unit, only: %i[ show edit update destroy ]
+  before_action :set_unit, only: %i[show edit update destroy]
 
   # GET /units or /units.json
   def index
@@ -7,17 +10,16 @@ class UnitsController < ApplicationController
   end
 
   # GET /units/1 or /units/1.json
-  def show
-  end
+  def show; end
 
   # GET /units/new
+  # If a source is given, it is used as a base (or "template")
   def new
-    @unit = Unit.new
+    @unit = Unit.new(unit_params)
   end
 
   # GET /units/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /units or /units.json
   def create
@@ -65,15 +67,21 @@ class UnitsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def unit_params
-    params.require(:unit).permit(
-      :sheet_id,
-      :code,
-      :width,
-      :height,
-      :offset_top,
-      :offset_bottom,
-      :depth,
-      :shelf_count
-    )
+    raw_params = params.fetch(:unit) do
+      if params[:source_id].present?
+        duplicate_unit_attributes(Unit.find(params[:source_id]).attributes)
+      else
+        {}
+      end
+    end
+
+    raw_params.permit(:sheet_id, :code, :width, :height, :offset_top, :offset_bottom, :depth, :shelf_count)
+  end
+
+  def duplicate_unit_attributes(attrs)
+    attrs.except('id', 'created_at', 'updated_at').tap do |attrs|
+      attrs['name'] = "#{attrs['name']} (duplicate)"
+      attrs['code'] = "#{attrs['code']} (duplicate)"
+    end
   end
 end

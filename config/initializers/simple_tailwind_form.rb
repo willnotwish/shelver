@@ -9,7 +9,7 @@ SimpleForm.setup do |config|
   config.boolean_label_class = ''
 
   # How the label text should be generated altogether with the required text.
-  config.label_text = lambda { |label, required, explicit_label| "#{label} #{required}" }
+  config.label_text = lambda { |label, required, _explicit_label| "#{label} #{required}" }
 
   # Define the way to render check boxes / radio buttons with labels.
   config.boolean_style = :inline
@@ -33,7 +33,6 @@ SimpleForm.setup do |config|
   config.input_field_error_class = 'border-red-500'
   config.input_field_valid_class = 'border-green-400'
   config.label_class = 'text-sm font-medium text-gray-600'
-
 
   # vertical forms
   #
@@ -64,7 +63,6 @@ SimpleForm.setup do |config|
       bb.use :hint, wrap_with: { tag: 'p', class: 'block text-grey-700 text-xs italic' }
       bb.use :full_error, wrap_with: { tag: 'p', class: 'block text-red-500 text-xs italic' }
     end
-
   end
 
   # vertical input for radio buttons and check boxes
@@ -124,16 +122,16 @@ SimpleForm.setup do |config|
   # The default wrapper to be used by the FormBuilder.
   config.default_wrapper = :vertical_form
 
-  # Custom wrappers for input types. This should be a hash containing an input
-  # type as key and the wrapper that will be used for all inputs with specified type.
+  # Custom wrappers for input types. A hash containing an input type as key
+  # and the wrapper that will be used for all inputs of the specified type.
   config.wrapper_mappings = {
-    boolean:       :vertical_boolean,
-    check_boxes:   :vertical_collection,
-    date:          :vertical_multi_select,
-    datetime:      :vertical_multi_select,
-    file:          :vertical_file,
+    boolean: :vertical_boolean,
+    check_boxes: :vertical_collection,
+    date: :vertical_multi_select,
+    datetime: :vertical_multi_select,
+    file: :vertical_file,
     radio_buttons: :vertical_collection,
-    range:         :vertical_range,
-    time:          :vertical_multi_select
+    range: :vertical_range,
+    time: :vertical_multi_select
   }
 end
