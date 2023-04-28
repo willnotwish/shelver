@@ -1,33 +1,47 @@
 # frozen_string_literal: true
 
 module Units
-  class SheetMaterialComponent < BaseComponent
+  # Displays sheet material needed to construct a unit
+  class SheetMaterialComponent < ViewComponent::Base
     include LinkTo
-    
-    delegate :shelf_width, :shelf_depth, :shelf_count, :sheet, to: :unit
-    delegate :height, :depth, to: :unit, prefix: true
-    
+    include AreaConversions
+
+    attr_reader :geometry, :sheet_material
+
+    def initialize(sheet_material:, geometry:, **)
+      super
+      @sheet_material = sheet_material
+      @geometry = geometry
+    end
+
+    delegate :shelf_area,
+             :shelf_count, :total_shelf_area,
+             :uniform_shelf_spacing,
+             :sheet_material_used, to: :geometry
+
     def minimum_number_of_sheets_needed
       sheet_usage.round(2)
     end
 
-    def side_area
-      2 * unit_height * unit_depth
-    end
-  
-    def shelf_area
-      shelf_count * shelf_width * shelf_depth
+    def sheet_usage
+      area_of_sheet = sheet_material.width * sheet_material.length
+      sheet_material_used.to_f / area_of_sheet
     end
 
-    def total_area
-      shelf_area + side_area
+    def shelf_width
+      geometry.shelf_width.round(1)
     end
-  
-    alias material_area total_area
-  
-    def sheet_usage
-      sheet_area = sheet.width * sheet.length
-      total_area.to_f / sheet_area
+
+    def shelf_depth
+      geometry.shelf_depth.round(1)
+    end
+
+    def side_height
+      geometry.unit_height.round(1)
+    end
+
+    def side_depth
+      geometry.unit_depth.round(1)
     end
   end
 end
