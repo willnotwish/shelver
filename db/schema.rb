@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_26_161404) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_27_080859) do
   create_table "composite_units", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "unit_id", null: false
     t.bigint "composite_id", null: false
@@ -63,6 +63,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_26_161404) do
     t.integer "depth"
     t.string "name"
     t.text "description"
+    t.integer "kind", default: 0, null: false
     t.index ["sheet_id"], name: "index_units_on_sheet_id"
   end
 

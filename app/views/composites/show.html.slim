@@ -3,14 +3,17 @@ nav.mb-4
 
 = render PageTitleComponent.new(page_title: @composite.name)
 
+
 .mt-8
-  - @composite.horizontal_units.each do |unit|
-    - scaled_unit_width = unit.width/3
-    - scaled_unit_height = unit.height/3
-    .float-left.ml-px(style = "width: #{scaled_unit_width}px; height: #{scaled_unit_height}px")
-      = link_to(unit) do
-        = render Units::PreviewComponent.new(unit:)
-  .clear-left
+  .w-full.h-2.bg-slate-300.mb-4.border-b.border-black
+  .border-t.border-slate-400.border-l.border-dashed
+    - @composite.horizontal_units.each do |unit|
+      - scaled_unit_width = unit.width/3
+      - scaled_unit_height = unit.height/3
+      .float-left(style = "width: #{scaled_unit_width}px; height: #{scaled_unit_height}px")
+        = link_to(unit) do
+          = render Units::PreviewComponent.new(unit:)
+    .clear-left
 
 / .mt-8.clear-left
 /   h4.font-bold Vertical units

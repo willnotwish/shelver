@@ -1,4 +1,4 @@
-== render PageTitleComponent.new(page_title: @unit.name)
+== render PageTitleComponent.new(page_title: @unit.name, subtitle: "#{@geometry.class.name.demodulize} geometry")
 
 .grid.grid-cols-2.gap-2
   .mt-4
@@ -7,18 +7,18 @@
 
   .mt-4
     h4.font-bold Dimensions
-    == render Units::DimensionsComponent.new(unit: @unit)
+    == render Units::DimensionsComponent.new(geometry: @geometry)
 
   .mt-4
     h4.font-bold Shelves
-    == render Units::ShelvesComponent.new(unit: @unit)
+    == render Units::ShelvesComponent.new(unit: @unit, geometry: @geometry)
 
   .mt-4
-    h4.font-bold Sheet material
-    == render Units::SheetMaterialComponent.new(unit: @unit)
+    h4.font-bold Material used
+    == render Units::SheetMaterialComponent.new(geometry: @geometry, sheet_material: @unit.sheet)
 
 .mt-12
-  == render Units::PreviewComponent.new(unit: @unit)
+  == render Units::PreviewComponent.new(geometry: @geometry, label_prefix: @unit.code)
 
 .mt-8 
   h4.font-bold Usage

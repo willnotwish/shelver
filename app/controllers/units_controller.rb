@@ -3,6 +3,7 @@
 # RESTful Unit actions
 class UnitsController < ApplicationController
   before_action :set_unit, only: %i[show edit update destroy]
+  helper_method :unit_geometry
 
   # GET /units or /units.json
   def index
@@ -10,7 +11,11 @@ class UnitsController < ApplicationController
   end
 
   # GET /units/1 or /units/1.json
-  def show; end
+  # Modify the geometry by passing a different 'kind' parameter
+  def show
+    kind = params[:kind] if params[:kind].present? # kind is an optional override
+    @geometry = unit_geometry(unit: @unit, kind:)
+  end
 
   # GET /units/new
   # If a source is given, it is used as a base (or "template")
@@ -61,6 +66,12 @@ class UnitsController < ApplicationController
 
   private
 
+  def unit_geometry(unit:, kind: nil)
+    kind ||= unit.kind
+    klass_name = "Geometry::#{kind.classify}Unit"
+    klass_name.constantize.new(unit:)
+  end
+
   def set_unit
     @unit = Unit.find(params[:id])
   end
@@ -75,7 +86,7 @@ class UnitsController < ApplicationController
       end
     end
 
-    raw_params.permit(:sheet_id, :code, :width, :height, :offset_top, :offset_bottom, :depth, :shelf_count)
+    raw_params.permit(:sheet_id, :name, :code, :kind, :width, :height, :offset_top, :offset_bottom, :depth, :shelf_count)
   end
 
   def duplicate_unit_attributes(attrs)

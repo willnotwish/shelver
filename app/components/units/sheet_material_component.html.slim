@@ -1,8 +1,8 @@
 .sheet-material
-  p Shelves: #{shelf_width} x #{shelf_depth} (#{shelf_count} off)
-  p Sides: #{unit_height} x #{unit_depth} (2 off)
+  p Shelves/top: #{shelf_width} x #{shelf_depth} (#{shelf_count + 1} off)
+  p Sides: #{side_height} x #{side_depth} (2 off)
 
   p.mt-2
     span.font-bold.text-red-500.italic Minimum requirement &nbsp;
-    span #{material_area/1_000_000.0} sq m of #{link_to(unit.sheet.name, unit.sheet)} (#{minimum_number_of_sheets_needed} sheets)
+    span #{to_sq_m(sheet_material_used)} (#{minimum_number_of_sheets_needed} sheets)
 

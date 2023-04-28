@@ -3,8 +3,10 @@
   = form_builder.error_notification message: form_builder.object.errors[:base].to_sentence if form_builder.object.errors[:base].present?
 
   .form-inputs.mt-8
+    = form_builder.input :name
     = form_builder.association :sheet, label: 'Material'
     = form_builder.input :code
+    = form_builder.input :kind, collection: Unit.kinds.keys.to_a
     = form_builder.input :width
     = form_builder.input :height
     = form_builder.input :offset_top
