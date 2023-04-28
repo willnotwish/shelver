@@ -2,8 +2,8 @@
 
 .grid.grid-cols-2.gap-2
   .mt-4
-    h4.font-bold Overview
-    == render Units::OverviewComponent.new(unit: @unit)
+    h4.font-bold= @unit.name
+    == render Units::OverviewComponent.new(unit: @unit, name: false)
 
   .mt-4
     h4.font-bold Dimensions

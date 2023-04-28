@@ -6,5 +6,5 @@ class Panel < ApplicationRecord
 
   belongs_to :sheet
 
-  validates :x, :, :panel, presence: true
+  validates :x, :y, :label, presence: true
 end

@@ -1,9 +1,13 @@
 = render PageTitleComponent.new(page_title: 'Units')
 
-#units.grid.grid-cols-2
+#units
   - @units.each do |unit|
-    .mb-4= render Units::OverviewComponent.new(unit:)
-    .mb-4= render Units::DimensionsComponent.new(geometry: unit_geometry(unit:))
+    h4.font-bold.text-lg.mb-2.border-b= unit.name || 'Unnamed'
+    .grid.grid-cols-2
+      .mb-8
+        = render Units::OverviewComponent.new(unit:, name: false)
+      .mb-8
+        = render Units::DimensionsComponent.new(geometry: unit_geometry(unit:))
 
 .nav-mt-8.border-t.py-4
   = link_to 'Design new unit', new_unit_path, class: 'text-orange-500 hover:underline'

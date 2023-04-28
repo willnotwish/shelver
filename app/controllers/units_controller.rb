@@ -2,8 +2,9 @@
 
 # RESTful Unit actions
 class UnitsController < ApplicationController
+  include UnitGeometry
+
   before_action :set_unit, only: %i[show edit update destroy]
-  helper_method :unit_geometry
 
   # GET /units or /units.json
   def index
@@ -65,12 +66,6 @@ class UnitsController < ApplicationController
   end
 
   private
-
-  def unit_geometry(unit:, kind: nil)
-    kind ||= unit.kind
-    klass_name = "Geometry::#{kind.classify}Unit"
-    klass_name.constantize.new(unit:)
-  end
 
   def set_unit
     @unit = Unit.find(params[:id])

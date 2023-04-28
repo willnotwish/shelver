@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 module Units
+  # A preview of a unit
   class PreviewComponent < ViewComponent::Base
+    with_collection_parameter :geometry
+
     attr_reader :geometry, :label_prefix
 
     def initialize(geometry:, label_prefix: 'SET_ME', scaling_factor: 3.0)
@@ -27,14 +30,15 @@ module Units
     end
 
     def dynamic_style(kind: :shelf)
-      height = 
-        if kind == :shelf
+      height =
+        case kind
+        when :shelf
           shelf_void_height
-        elsif kind == :top_void
+        when :top_void
           geometry.offset_top
-        elsif kind == :bottom_void
+        when :bottom_void
           geometry.offset_bottom
-        end  
+        end
 
       "height: #{scale(height)}px"
     end

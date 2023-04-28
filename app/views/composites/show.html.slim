@@ -3,28 +3,15 @@ nav.mb-4
 
 = render PageTitleComponent.new(page_title: @composite.name)
 
-
 .mt-8
   .w-full.h-2.bg-slate-300.mb-4.border-b.border-black
   .border-t.border-slate-400.border-l.border-dashed
     - @composite.horizontal_units.each do |unit|
-      - scaled_unit_width = unit.width/3
-      - scaled_unit_height = unit.height/3
-      .float-left(style = "width: #{scaled_unit_width}px; height: #{scaled_unit_height}px")
+      .float-left
         = link_to(unit) do
-          = render Units::PreviewComponent.new(unit:)
+          = render Units::PreviewComponent.new(geometry: unit_geometry(unit:), label_prefix: unit.code)
     .clear-left
-
-/ .mt-8.clear-left
-/   h4.font-bold Vertical units
-/   - if @composite.vertical_units.none?
-/     p None
-/   - else
-/     - @composite.vertical_units.each do |unit|
-/       .mt-4
-/         = render Units::OverviewComponent.new(unit:)
-/         = render Units::DimensionsComponent.new(unit:)
-
+    
 .mt-8
   h4.font-bold Dimensions (max)
   div id="#{dom_id @composite}"
