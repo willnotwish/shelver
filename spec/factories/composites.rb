@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :composite do
-    name { "MyString" }
-    description { "MyText" }
+    name { 'Test composite' }
   end
 end

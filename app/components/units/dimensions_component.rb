@@ -10,6 +10,7 @@ module Units
       @geometry = geometry
     end
 
-    delegate :unit_width, :unit_height, :unit_depth, :offset_top, :offset_bottom, to: :geometry
+    delegate :unit_width, :unit_height, :unit_depth, :offset_top, :offset_bottom,
+             :shelf_opening, to: :geometry
   end
 end

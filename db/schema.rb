@@ -52,12 +52,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_27_080859) do
 
   create_table "units", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "sheet_id", null: false
-    t.string "code"
-    t.integer "width"
-    t.integer "height"
-    t.integer "offset_top"
-    t.integer "offset_bottom"
-    t.integer "shelf_count"
+    t.string "code", null: false
+    t.integer "width", null: false
+    t.integer "height", null: false
+    t.integer "offset_top", default: 0, null: false
+    t.integer "offset_bottom", default: 0, null: false
+    t.integer "shelf_count", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "depth"

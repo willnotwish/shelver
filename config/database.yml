@@ -12,7 +12,7 @@ development:
 
 test:
   <<: *default
-  database: <%= ENV.fetch("MYSQL_DATABASE") { 'shelver_test' } %>
+  database: 'shelver_test'
 
 production:
   <<: *default
