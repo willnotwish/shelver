@@ -14,18 +14,10 @@ module Units
 
     delegate :shelf_count,
              :uniform_shelf_spacing,
-             :shelf_area, to: :geometry
+             :shelf_width, :shelf_depth, :shelf_area, to: :geometry
 
     def total_shelf_area
       shelf_count * shelf_area
-    end
-
-    def shelf_width
-      geometry.shelf_width.round(1)
-    end
-
-    def shelf_depth
-      geometry.shelf_depth.round(1)
     end
 
     def description

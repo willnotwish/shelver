@@ -29,11 +29,11 @@ module Units
       "width: #{scale(geometry.unit_width)}px"
     end
 
-    def dynamic_style(kind: :shelf)
+    def dynamic_style(kind: :shelf, index: nil)
       height =
         case kind
         when :shelf
-          shelf_void_height
+          shelf_void_height(index)
         when :top_void
           geometry.offset_top
         when :bottom_void
@@ -43,8 +43,13 @@ module Units
       "height: #{scale(height)}px"
     end
 
-    def shelf_void_height
+    def shelf_void_height(_index)
       geometry.uniform_shelf_spacing - geometry.sheet_thickness
+    end
+
+    def shelf_y_pos(index)
+      h0 = geometry.offset_top
+      h0 + (geometry.uniform_shelf_spacing * (index + 1))
     end
 
     private
