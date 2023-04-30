@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 module Geometry
-  # Models the geometry of a corner unit
+  # Models the geometry of a corner unit, intended to join
+  # two plain units at right angles in an internal corner
   class CornerUnit
     attr_reader :height, :width, :depth
     attr_reader :offset_top, :offset_bottom
@@ -15,6 +16,7 @@ module Geometry
       extract_material_thickness(unit)
     end
 
+    # Dimensions
     alias unit_height height
     alias unit_width width
     alias unit_depth width
@@ -23,6 +25,10 @@ module Geometry
       Math.sqrt(2.0 * cutout * cutout)
     end
 
+    alias thickness_of_top sheet_thickness
+    alias thickness_of_shelf sheet_thickness
+
+    # Shelves
     def shelf_width
       shelf_width_and_depth
     end
@@ -38,6 +44,11 @@ module Geometry
     end
     alias usable_shelf_area shelf_area
 
+    def uniform_shelf_spacing
+      (height - offset_top - offset_bottom - thickness_of_top) / shelf_count
+    end
+
+    # Raw material
     def sheet_area
       sides = 2 * height * depth
       shelf = shelf_width_and_depth * shelf_width_and_depth
@@ -45,14 +56,6 @@ module Geometry
       sides + shelves_and_top
     end
     alias sheet_material_used sheet_area
-
-    # Thickness
-    alias thickness_of_top sheet_thickness
-    alias thickness_of_shelf sheet_thickness
-
-    def uniform_shelf_spacing
-      (height - offset_top - offset_bottom - thickness_of_top) / shelf_count
-    end
 
     private
 

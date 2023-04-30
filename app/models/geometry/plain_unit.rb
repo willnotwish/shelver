@@ -4,10 +4,6 @@ module Geometry
   # The simplest form of unit geometry. Expects a unit to be passed in as config,
   # rather than individual dimensions, of which there are many.
   class PlainUnit
-    # include HasBoundingBox
-    # include HasOffsets
-    # include HasShelves
-    
     attr_reader :height, :width, :depth
     attr_reader :offset_top, :offset_bottom
     attr_reader :shelf_count
@@ -52,10 +48,6 @@ module Geometry
 
     def uniform_shelf_spacing
       (height - offset_top - offset_bottom - thickness_of_top) / shelf_count
-    end
-
-    def panels
-      []
     end
 
     private
