@@ -2,8 +2,6 @@
 
 # RESTful Composite actions
 class CompositesController < ApplicationController
-  include UnitGeometry
-
   def index
     @composites = Composite.all
   end

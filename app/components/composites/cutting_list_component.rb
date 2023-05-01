@@ -10,7 +10,18 @@ module Composites
 
     # Returns an array of panels
     def panels
-      @panels ||= self.class.panels_from_composite(composite)
+      @panels ||= panels_from_composite(composite)
+    end
+
+    def panels_from_composite(composite)
+      composite.units.map do |unit|
+        self.class.build_panels(
+          unit_code: unit.code,
+          sheet: unit.sheet,
+          geometry: helpers.unit_geometry(unit:),
+          shelf_count: unit.shelf_count
+        )
+      end.flatten.compact
     end
 
     def quantified_panels
@@ -57,41 +68,44 @@ module Composites
         end
         hash
       end
+    
+      # A PanelBuilder class might be better
+      def build_panels(unit_code:, geometry:, sheet:, shelf_count:)
+        dimensions = geometry.side_panel_dimensions
+        lhs = build_panel(dimensions:, sheet:,
+                          label: "#{unit_code}.L",
+                          description: "Left side of unit #{unit_code}")
 
-      def panels_from_composite(composite)
-        composite.units.map do |unit|
-          sheet = unit.sheet
+        rhs = build_panel(dimensions:, sheet:,
+                          label: "#{unit_code}.R",
+                          description: "Right side of unit #{unit_code}")
 
-          # Sides
-          x = unit.height
-          y = unit.depth
-          label = "#{unit.code}.L"
-          description = "Left side of unit #{unit.code}"
-          left_side = Panel.new(sheet:, x:, y:, label:, description:)
-          
-          label = "#{unit.code}.R"
-          description = "Right side of unit #{unit.code}"
-          right_side = Panel.new(sheet:, x:, y:, label:, description:)
+        # Shelves
+        dimensions = geometry.shelf_panel_dimensions
+        shelves = shelf_count.times.map.with_index do |i|
+          build_panel(dimensions:, sheet:,
+                      label: "#{unit_code}.S#{i+1}",
+                      description: "Shelf #{i+1} of unit #{unit_code}")
+        end
 
-          # Shelves
-          x = unit.depth
-          y = unit.width - 2 * sheet.thickness
-          shelves = []
-          unit.shelf_count.times do |i|
-            label = "#{unit.code}.S#{i+1}"
-            description = "Shelf #{i+1} of unit #{unit.code}"
-            shelf = Panel.new(sheet:, x:, y:, label:, description:)
-            shelves << shelf
-          end
+        dimensions = geometry.top_panel_dimensions
+        top = build_panel(dimensions:, sheet:,
+                          label: "#{unit_code}.T",
+                          description: "Top of unit #{unit_code}")
 
-          # Top
-          label = "#{unit.code}.T"
-          description = "Top of unit #{unit.code}"
-          top = Panel.new(sheet:, x:, y:, label:, description:)
+        [lhs, rhs, shelves, top].flatten
+      end
 
-          [left_side, right_side, shelves, top].flatten
+      def build_panel(dimensions:, **panel_attrs)
+        x, y = order(dimensions)
+        Panel.new(panel_attrs.merge(x:, y:))
+      end
 
-        end.flatten.compact
+      def order(dimensions)
+        x, y = dimensions
+        return [x, y] if x >= y
+
+        [y, x]
       end
     end
   end
