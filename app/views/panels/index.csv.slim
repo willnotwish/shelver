@@ -1,0 +1,9 @@
+- require 'csv'
+
+= CSV.generate do |csv|
+  - csv << ['N', @composite.name]
+  - csv << ['M', @sheet.name]
+  - csv << ['K', 2]
+  - csv << ['S', @sheet.length, @sheet.width, nil, nil]
+  - @quantified_panels.each do |size, quantity|
+    - csv << ['P', size.x, size.y, quantity, nil, nil]

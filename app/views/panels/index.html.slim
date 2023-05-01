@@ -1,0 +1,23 @@
+nav.mb-4
+  => link_to 'View composite', composite_path(@composite), class: 'hover:underline text-orange-500'
+
+= render PageTitleComponent.new(page_title: "#{@composite.name} panels")
+
+nav.mb-4
+  => link_to 'Export as optiCutter CSV', { format: :csv, schema: :opticutter }, class: 'hover:underline text-orange-500'
+
+.grid.grid-cols-2
+  .list
+    h5.text-sm.mb-2 Complete list
+    table
+      thead
+        tr
+          th Label
+          th X
+          th Y  
+      tbody
+        = render(PanelComponent.with_collection(@panels))
+
+  .summary
+    h5.text-sm.mb-2 Summary
+    p TODO. Generate summary here
