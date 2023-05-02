@@ -4,8 +4,13 @@ module Composites
   class CuttingListComponent < ViewComponent::Base
     attr_reader :composite
 
-    def initialize(composite:)
+    def initialize(composite:, show_individual_panels: false)
       @composite = composite
+      @show_individual_panels = show_individual_panels
+    end
+
+    def show_individual_panels?
+      @show_individual_panels
     end
 
     # Returns an array of panels

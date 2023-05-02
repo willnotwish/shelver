@@ -1,7 +1,10 @@
 nav.mb-4
-  => link_to 'List all composites', composites_path, class: 'hover:underline text-orange-500'
+  => link_to 'List all', composites_path, class: 'hover:underline text-orange-500'
 
 = render PageTitleComponent.new(page_title: @composite.name)
+
+nav.mb-4
+  => link_to 'Export as CSV', [@composite, :panels, fmt: :csv], class: 'hover:underline text-orange-500'
 
 .mt-8
   / .w-full.h-2.bg-slate-300.mb-4.border-b.border-black
