@@ -13,10 +13,10 @@ class PanelsQuantifier
   end
 
   # Used as a hash key
-  class Size
+  class Key
     attr_reader :x, :y
 
-    def initialize(width, length)
+    def initialize(width:, length:)
       @x = width
       @y = length
     end
@@ -39,19 +39,20 @@ class PanelsQuantifier
   end
 
   class << self
-    # Returns a hash like this
-    # {
-    #   [300, 200] => 4,  # 4 off 300 x 200
-    #   [1220, 300] => 2
-    # }
+    # Returns a hash of hashes. The outer hash is keyed on sheet_id (material).
+    # The inner is keyed on 2D dimensions (width & length - interchangable).
     def quantify(panels)
-      hash = {}
+      by_sheet_id = {}
       panels.each do |panel|
-        size = Size.new(panel.x, panel.y)
+        sheet_id = panel.sheet_id
+        by_sheet_id[sheet_id] ||= {}
+        hash = by_sheet_id[sheet_id]
+
+        size = Key.new(width: panel.x, length: panel.y)
         hash[size] ||= 0
         hash[size] += 1
       end
-      hash
+      by_sheet_id
     end
   end
 end

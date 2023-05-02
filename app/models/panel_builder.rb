@@ -1,10 +1,13 @@
+# frozen_string_literal: true
+
+# Lists panels from units
 class PanelBuilder
   include ApplicationHelper
 
-  attr_reader :composite
+  attr_reader :units
 
-  def initialize(composite:)
-    @composite = composite
+  def initialize(units:)
+    @units = units
   end
 
   def panels
@@ -12,15 +15,15 @@ class PanelBuilder
   end
 
   class << self
-    def panels_from_composite(composite)
-      new(composite:).panels
+    def panels_for(units)
+      new(units:).panels
     end
   end
-  
+
   private
 
   def build_panels
-    composite.units.map do |unit|
+    units.map do |unit|
       self.class.build_unit_panels(
         unit_code: unit.code,
         sheet: unit.sheet,
@@ -43,10 +46,10 @@ class PanelBuilder
 
       # Shelves
       dimensions = geometry.shelf_panel_dimensions
-      shelves = shelf_count.times.map.with_index do |i|
+      shelves = shelf_count.times.map do |i|
         build_panel(dimensions:, sheet:,
-                    label: "#{unit_code}.S#{i+1}",
-                    description: "Shelf #{i+1} of unit #{unit_code}")
+                    label: "#{unit_code}.S#{i + 1}",
+                    description: "Shelf #{i + 1} of unit #{unit_code}")
       end
 
       dimensions = geometry.top_panel_dimensions

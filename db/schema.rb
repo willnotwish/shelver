@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_30_081605) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_01_225507) do
   create_table "composite_units", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "unit_id", null: false
     t.bigint "composite_id", null: false
@@ -38,6 +38,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_30_081605) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["sheet_id"], name: "index_panels_on_sheet_id"
+  end
+
+  create_table "project_composites", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.bigint "composite_id", null: false
+    t.integer "position", default: 100, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["composite_id"], name: "index_project_composites_on_composite_id"
+    t.index ["position"], name: "index_project_composites_on_position"
+    t.index ["project_id"], name: "index_project_composites_on_project_id"
   end
 
   create_table "projects", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -77,5 +88,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_30_081605) do
   add_foreign_key "composite_units", "composites"
   add_foreign_key "composite_units", "units"
   add_foreign_key "panels", "sheets"
+  add_foreign_key "project_composites", "composites"
+  add_foreign_key "project_composites", "projects"
   add_foreign_key "units", "sheets"
 end

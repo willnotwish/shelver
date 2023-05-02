@@ -1,7 +1,7 @@
 nav.mb-4
-  => link_to 'View composite', composite_path(@composite), class: 'hover:underline text-orange-500'
+  => link_to 'View parent', @parent, class: 'hover:underline text-orange-500'
 
-= render PageTitleComponent.new(page_title: "#{@composite.name} panels")
+= render PageTitleComponent.new(page_title: "#{@parent.name} panels")
 
 nav.mb-4
   => link_to 'Export as optiCutter CSV', { format: :csv, schema: :opticutter }, class: 'hover:underline text-orange-500'
