@@ -103,6 +103,30 @@ module Geometry
         area = height * depth * 2 + (shelf_count + 1) * w * w
         expect(geometry.sheet_area).to eq(area)
       end
+
+      describe 'panels' do
+        it 'side panel has the correct dimensions' do
+          expect(geometry.side_panel_dimensions).to match_array([depth, height])
+        end
+
+        it 'shelf panel has the correct dimensions' do
+          w = width - thickness
+          expect(geometry.shelf_panel_dimensions).to match_array([w, w])
+        end
+
+        it 'top panel has the correct dimensions' do
+          w = width - thickness
+          expect(geometry.shelf_panel_dimensions).to match_array([w, w])
+        end
+
+        it 'have the correct total area' do
+          sides = height * depth * 2
+          shelf = (width - thickness) * (width - thickness)
+          top = shelf
+          area = sides + shelf_count * shelf + top
+          expect(geometry.panel_area).to eq(area)
+        end
+      end
     end
   end
 end

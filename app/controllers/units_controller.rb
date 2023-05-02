@@ -2,23 +2,16 @@
 
 # RESTful Unit actions
 class UnitsController < ApplicationController
-  include UnitGeometry
-
   before_action :set_unit, only: %i[show edit update destroy]
 
-  # GET /units or /units.json
   def index
     @units = Unit.all
   end
 
-  # GET /units/1 or /units/1.json
-  # Modify the geometry by passing a different 'kind' parameter
   def show
-    kind = params[:kind] if params[:kind].present? # kind is an optional override
-    @geometry = unit_geometry(unit: @unit, kind:)
+    @kind = params[:kind] if params[:kind].present? # kind is an optional override
   end
 
-  # GET /units/new
   # If a source is given, it is used as a base (or "template")
   def new
     @unit = Unit.new(unit_params)

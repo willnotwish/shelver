@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_27_080859) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_30_081605) do
   create_table "composite_units", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "unit_id", null: false
     t.bigint "composite_id", null: false
@@ -38,6 +38,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_27_080859) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["sheet_id"], name: "index_panels_on_sheet_id"
+  end
+
+  create_table "projects", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "sheets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

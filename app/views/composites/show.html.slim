@@ -4,7 +4,7 @@ nav.mb-4
 = render PageTitleComponent.new(page_title: @composite.name)
 
 .mt-8
-  .w-full.h-2.bg-slate-300.mb-4.border-b.border-black
+  / .w-full.h-2.bg-slate-300.mb-4.border-b.border-black
   .border-t.border-slate-400.border-l.border-dashed
     - @composite.horizontal_units.each do |unit|
       .float-left

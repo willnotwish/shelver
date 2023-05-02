@@ -4,8 +4,6 @@ module Geometry
   RSpec.describe PlainUnit, type: :model do
     subject { described_class.new(unit:) }
 
-    let(:thickness) { 20 }
-    let(:sheet) { FactoryBot.create(:sheet, thickness:) }
     let(:geometry) { subject } # alias
 
     context 'when the source (plain) unit has a height of 2m and a width of 50cm' do
@@ -15,7 +13,9 @@ module Geometry
       let(:shelf_count) { 4 }
       let(:offset_top) { 20 }
       let(:offset_bottom) { 80 }
-
+      let(:thickness) { 20 }
+      let(:sheet) { FactoryBot.create(:sheet, thickness:) }
+  
       let(:unit) do
         FactoryBot.create(:unit, sheet:, width:, height:, depth:,
                           shelf_count:, offset_top:, offset_bottom:)
@@ -88,9 +88,26 @@ module Geometry
         end
       end
 
-      it 'has the correct sheet area' do
-        area = height * depth * 2 + (shelf_count + 1) * depth * (width - 2 * thickness)
-        expect(geometry.sheet_area).to eq(area)
+      describe 'panels' do
+        it 'side panel has the correct dimensions' do
+          expect(geometry.side_panel_dimensions).to match_array([depth, height])
+        end
+
+        it 'shelf panel has the correct dimensions' do
+          expect(geometry.shelf_panel_dimensions).to match_array([width - 2 * thickness, depth])
+        end
+
+        it 'top panel has the correct dimensions' do
+          expect(geometry.shelf_panel_dimensions).to match_array([width - 2 * thickness, depth])
+        end
+
+        it 'have the correct total area' do
+          sides = height * depth * 2
+          shelf = depth * (width - (2 * thickness))
+          top = shelf
+          area = sides + shelf_count * shelf + top
+          expect(geometry.panel_area).to eq(area)
+        end
       end
     end
   end

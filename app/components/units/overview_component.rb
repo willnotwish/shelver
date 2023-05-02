@@ -27,6 +27,8 @@ module Units
     end
 
     alias unit_name name
+    
     delegate :kind, to: :unit, prefix: true
+    alias unit_type unit_kind
   end
 end
