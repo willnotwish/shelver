@@ -1,0 +1,33 @@
+.grid.grid-cols-2
+  - if show_details?
+    .details
+      h5.text-sm.mb-2 Details
+      table
+        thead
+          tr
+            th Label
+            th X
+            th Y  
+        tbody
+          - panels.each do |panel|
+            tr
+              td.p-1= panel.label
+              td.p-1.text-right= panel.x
+              td.p-1.text-right= panel.y
+
+  - if show_quantified?
+    .quantified
+      - PanelsQuantifier.quantify(panels).tap do |quantified|
+        - quantified.each do |sheet_id, hash|
+          - sheet = Sheet.find(sheet_id)
+          h5.text-sm.mb-2 Ex #{sheet.name} (#{sheet.description})
+          table
+            thead
+              tr
+                th Qty
+                th Size
+            tbody
+              - hash.each do |key, quantity|
+                tr
+                  td.p-1.pr-4.text-right= quantity
+                  td.p-1.text-right #{key.x} x #{key.y} 

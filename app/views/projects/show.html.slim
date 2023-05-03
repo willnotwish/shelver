@@ -1,0 +1,33 @@
+nav.mb-4
+  => link_to 'List all', projects_path, class: 'hover:underline text-orange-500'
+
+- composite_count = @project.composites.count
+- unit_count = @project.units.count
+- subtitle = "#{composite_count} #{'composite'.pluralize(composite_count)}: #{unit_count} #{'unit'.pluralize(unit_count)}"
+= render PageTitleComponent.new(page_title: @project.name, subtitle:)
+
+.mt-8(id="#{dom_id @project}")
+  - @project.composites.each do |composite|
+    .mt-4(id="#{dom_id composite}")
+      p= link_to composite.name, composite, class: 'hover:underline text-orange-500'
+      p #{composite.max_width} (w) x #{composite.max_height} (h) x #{composite.max_depth} (d)
+  
+  / .border-t.border-slate-400.border-l.border-dashed
+  /   - @composite.horizontal_units.each do |unit|
+  /     .float-left
+  /       = link_to(unit) do
+  /         = render Units::PreviewComponent.new(geometry: unit_geometry(unit:), label_prefix: unit.code)
+  /   .clear-left
+    
+.mt-8
+  h4.mb-2
+    span.font-bold
+      ' Panels
+    nav.inline-block.text-sm
+      => link_to 'cutting list', [@project, :panels, fmt: :csv], class: 'hover:underline text-orange-500'
+
+  = render Panels::ListComponent.new(panels: PanelBuilder.panels_for(@project.units), name: @project.name, show_details: false)
+
+nav.mt-24
+  h4.text-red-500.mt-8.border-t.pt-4 Danger zone
+  = button_to 'Delete', @project, method: :delete, class: 'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4'

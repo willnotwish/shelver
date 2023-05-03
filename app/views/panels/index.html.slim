@@ -6,18 +6,4 @@ nav.mb-4
 nav.mb-4
   => link_to 'Export as optiCutter CSV', { format: :csv, schema: :opticutter }, class: 'hover:underline text-orange-500'
 
-.grid.grid-cols-2
-  .list
-    h5.text-sm.mb-2 Complete list
-    table
-      thead
-        tr
-          th Label
-          th X
-          th Y  
-      tbody
-        = render(PanelComponent.with_collection(@panels))
-
-  .summary
-    h5.text-sm.mb-2 Summary
-    p TODO. Generate summary here
+= render Panels::ListComponent.new(panels: @panels, name: @parent.name)
