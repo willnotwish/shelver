@@ -11,13 +11,6 @@ nav.mb-4
     .mt-4(id="#{dom_id composite}")
       p= link_to composite.name, composite, class: 'hover:underline text-orange-500'
       p #{composite.max_width} (w) x #{composite.max_height} (h) x #{composite.max_depth} (d)
-  
-  / .border-t.border-slate-400.border-l.border-dashed
-  /   - @composite.horizontal_units.each do |unit|
-  /     .float-left
-  /       = link_to(unit) do
-  /         = render Units::PreviewComponent.new(geometry: unit_geometry(unit:), label_prefix: unit.code)
-  /   .clear-left
     
 .mt-8
   h4.mb-2

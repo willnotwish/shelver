@@ -7,5 +7,4 @@ module UnitGeometry
   included do
     helper_method :unit_geometry
   end
-
 end

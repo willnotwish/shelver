@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Units
-  # A preview of a unit
+module Geometry
+  # A preview of a geometry
   class PreviewComponent < ViewComponent::Base
     with_collection_parameter :geometry
 
@@ -15,7 +15,6 @@ module Units
     end
 
     delegate :shelf_count, to: :geometry
-    delegate :code, to: :unit, prefix: true
 
     def shelf_label(index)
       "#{label_prefix}.S#{shelf_count - index}"

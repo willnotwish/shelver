@@ -2,6 +2,8 @@
 
 # Limited actions to generate a cutting list for display or CSV export
 class PanelsController < ApplicationController
+  include HasScaling
+
   def index
     find_units # may be nested under project, composite, unit
     @panels = PanelBuilder.panels_for(@units)
@@ -22,7 +24,7 @@ class PanelsController < ApplicationController
   end
 
   def identify_parent
-    @parent = 
+    @parent =
       if params[:project_id].present?
         Project.find(params[:project_id])
       elsif params[:composite_id].present?

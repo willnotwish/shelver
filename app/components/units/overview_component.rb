@@ -28,7 +28,7 @@ module Units
 
     alias unit_name name
     
-    delegate :kind, to: :unit, prefix: true
+    delegate :kind, :shelf_count, to: :unit, prefix: true
     alias unit_type unit_kind
   end
 end

@@ -2,6 +2,8 @@
 
 # RESTful Unit actions
 class UnitsController < ApplicationController
+  include HasScaling
+
   before_action :set_unit, only: %i[show edit update destroy]
 
   def index

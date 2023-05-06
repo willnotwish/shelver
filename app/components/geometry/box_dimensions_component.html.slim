@@ -1,0 +1,14 @@
+.grid.grid-cols-4.w-1/2
+  .actual
+  .width w
+  .height h
+  .depth d
+  .actual Actual
+  .width= actual_width
+  .height= actual_height
+  .depth= actual_depth
+  - if scaled?
+    .scaled Scaled by <b>#{scale}</b>
+    .width= scaled_width
+    .height= scaled_height
+    .depth= scaled_depth

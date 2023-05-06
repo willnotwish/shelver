@@ -1,12 +1,11 @@
 - require 'csv'
 
-- by_sheet_id = quantify_panels(panels: @panels)
+- by_sheet = quantify_panels(panels: @panels)
 - title = @parent&.name || 'Units'
 - kerf = 2
 
 = CSV.generate do |csv|
-  - by_sheet_id.each do |sheet_id, hash|
-    - sheet = Sheet.find(sheet_id)
+  - by_sheet.each do |sheet, hash|
     - csv << ['N', "#{title} ex #{sheet.name}"]
     - csv << ['M', sheet.name]
     - csv << ['K', kerf]

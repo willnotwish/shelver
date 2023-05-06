@@ -2,12 +2,15 @@
 
 # RESTful Composite actions
 class CompositesController < ApplicationController
+  include HasScaling
+
   def index
     @composites = Composite.all
   end
 
   def show
     @composite = Composite.find params[:id]
+    @units = @composite.horizontal_units
   end
 
   def new; end
