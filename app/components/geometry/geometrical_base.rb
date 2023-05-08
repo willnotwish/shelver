@@ -7,11 +7,11 @@ module Geometry
 
     attr_reader :geometry
 
-    def initialize(geometry:, scale: nil, rounding: 1, **)
+    def initialize(geometry:, **)
       super
       @geometry = geometry
-      @scale = scale&.to_f
-      @rounding = rounding
+      # @scale = scale&.to_f
+      # @rounding = rounding
     end
   end
 end

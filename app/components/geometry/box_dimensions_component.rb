@@ -7,11 +7,12 @@ module Geometry
 
     attr_reader :box
 
-    def initialize(box:, scale: nil, rounding: 1, **)
+    def initialize(box:, **options)
+      Rails.logger.debug "#{self.class.name}#initialize. options: #{options}"
       super
       @box = box
-      @scale = scale&.to_f
-      @rounding = rounding
+      # @scale = scale&.to_f
+      # @rounding = rounding
     end
 
     delegate :width, :height, :depth, to: :box, prefix: :actual
