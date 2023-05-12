@@ -27,6 +27,6 @@ module Geometry
     def shelf_area
       shelf_width * shelf_depth
     end
-    alias usable_shelf_area shelf_area
+    alias usable_shelf_area shelf_area # all the shelf is usable
   end
 end

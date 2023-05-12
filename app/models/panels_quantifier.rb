@@ -13,13 +13,15 @@ class PanelsQuantifier
   end
 
   # Used as a hash key
-  class Key
-    attr_reader :x, :y
+  class PanelAsKey
+    attr_reader :panel, :scale
 
-    def initialize(width:, length:)
-      @x = width
-      @y = length
+    def initialize(panel:, scale: nil, **)
+      @panel = panel
+      @scale = scale
     end
+
+    delegate :x, :y, to: :panel
 
     def to_a
       [x, y]
@@ -36,23 +38,35 @@ class PanelsQuantifier
     def to_s
       [to_a.max, to_a.min].join(' x ')
     end
+
+    def scaled_x
+      return x unless scale.present?
+
+      (x / scale).round(1)
+    end
+
+    def scaled_y
+      return x unless scale.present?
+
+      (y / scale).round(1)
+    end
   end
 
   class << self
-    # Returns a hash of hashes. The outer hash is keyed on sheet_id (material).
+    # Returns a hash of hashes. The outer hash is keyed on sheet (material).
     # The inner is keyed on 2D dimensions (width & length - interchangable).
-    def quantify(panels)
-      by_sheet_id = {}
+    def quantify(panels, scale: nil)
+      by_sheet = {}
       panels.each do |panel|
-        sheet_id = panel.sheet_id
-        by_sheet_id[sheet_id] ||= {}
-        hash = by_sheet_id[sheet_id]
+        sheet = panel.sheet
+        by_sheet[sheet] ||= {}
+        hash = by_sheet[sheet]
 
-        size = Key.new(width: panel.x, length: panel.y)
-        hash[size] ||= 0
-        hash[size] += 1
+        key = PanelAsKey.new(panel:, scale:)
+        hash[key] ||= 0
+        hash[key] += 1
       end
-      by_sheet_id
+      by_sheet
     end
   end
 end

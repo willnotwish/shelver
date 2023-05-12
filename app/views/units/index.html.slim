@@ -7,7 +7,7 @@
       .mb-8
         = render Units::OverviewComponent.new(unit:, name: false)
       .mb-8
-        = render Units::DimensionsComponent.new(geometry: unit_geometry(unit:))
+        = render Geometry::DimensionsComponent.new(geometry: unit_geometry(unit:))
 
 .nav-mt-8.border-t.py-4
   = link_to 'Design new unit', new_unit_path, class: 'text-orange-500 hover:underline'

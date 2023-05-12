@@ -1,5 +1,10 @@
 tr
-  td.p-2= panel.label
-  td.p-2.text-right= panel.x
-  td.p-2.text-right= panel.y
-
+  - if show_label?
+    td.p-2= panel_label
+  - if show_quantity?
+    td.p-2= panel_quantity
+  td.p-2.text-right= panel_x
+  td.p-2.text-right= panel_y
+  - if scaled?
+    td.p-2.text-right.pl-8= scaled_x
+    td.p-2.text-right= scaled_y

@@ -1,33 +1,32 @@
 .grid.grid-cols-2
   - if show_details?
     .details
-      h5.text-sm.mb-2 Details
+      h5.text-sm.mb-4 Complete list
       table
         thead
           tr
             th Label
-            th X
-            th Y  
+            th.pl-8 X
+            th.pl-2 Y  
+            - if scaled?
+              th.pl-8 scaled X
+              th.pl-2 scaled Y
         tbody
-          - panels.each do |panel|
-            tr
-              td.p-1= panel.label
-              td.p-1.text-right= panel.x
-              td.p-1.text-right= panel.y
+          == render PanelComponent.with_collection(panels)
 
   - if show_quantified?
     .quantified
-      - PanelsQuantifier.quantify(panels).tap do |quantified|
-        - quantified.each do |sheet_id, hash|
-          - sheet = Sheet.find(sheet_id)
-          h5.text-sm.mb-2 Ex #{sheet.name} (#{sheet.description})
-          table
-            thead
+      - PanelsQuantifier.quantify(panels).each do |sheet, hash|
+        h5.text-sm.mb-4 ex #{sheet.name} (#{sheet.description})
+        table
+          thead
+            tr
+              th.pr-16 Qty
+              th(colspan=2) Dimensions
+              - if scaled?
+                th(colspan=2) Scaled
+
+          tbody
+            - hash.each do |key, quantity|
               tr
-                th Qty
-                th Size
-            tbody
-              - hash.each do |key, quantity|
-                tr
-                  td.p-1.pr-4.text-right= quantity
-                  td.p-1.text-right #{key.x} x #{key.y} 
+                = render PanelComponent.new(panel: key.panel, show_label: false, quantity:)

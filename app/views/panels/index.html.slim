@@ -1,9 +1,9 @@
 nav.mb-4
   => link_to 'View parent', @parent, class: 'hover:underline text-orange-500'
 
-= render PageTitleComponent.new(page_title: "#{@parent.name} panels")
+== render PageTitleComponent.new(page_title: "#{@parent.name} panels")
 
 nav.mb-4
   => link_to 'Export as optiCutter CSV', { format: :csv, schema: :opticutter }, class: 'hover:underline text-orange-500'
 
-= render Panels::ListComponent.new(panels: @panels, name: @parent.name)
+== render Panels::ListComponent.new(panels: @panels, name: @parent.name)
