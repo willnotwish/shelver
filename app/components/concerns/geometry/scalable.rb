@@ -23,20 +23,19 @@ module Geometry
       end
     end
 
-    def initialize(scale: 1, rounding: 1, **options)
-      Rails.logger.debug "#{self.class.name}#initialize. scale: #{scale}, rounding: #{rounding}"
+    def initialize(scale: nil, rounding: 1, **options)
       super
       @scale = scale&.to_f
       @rounding = rounding
     end
 
     def before_render
-      @scale ||= helpers.default_scale.to_f
+      @scale ||= helpers.default_scale&.to_f
     end
 
     def scaled?
-      true
-      # scale != 1
+      # true
+      scale.present?
     end
 
     def scale
@@ -46,6 +45,12 @@ module Geometry
     def rounding
       @rounding || 1
     end
+
+    def scale_and_round(dimension)
+      _round(_scale(dimension))
+      # (dimension / scale).round(rounding)
+    end
+    alias sar scale_and_round
 
     private
 
@@ -58,11 +63,5 @@ module Geometry
     def _round(dimension)
       dimension&.round(rounding)
     end
-
-    def scale_and_round(dimension)
-      _round(_scale(dimension))
-      # (dimension / scale).round(rounding)
-    end
-    alias sar scale_and_round
   end
 end

@@ -1,0 +1,10 @@
+- if show_x_scale?
+  .mb-8.w-full.bg-slate-300.border-b.border-black
+    p x scale here
+
+.border-t.border-slate-400.border-l.border-dashed
+  - units.each do |unit|
+    .float-left
+      == link_to(unit, target: '_top') do
+        == render Geometry::PreviewComponent.new(geometry: geometry_of(unit), label_prefix: unit.code)
+  .clear-left

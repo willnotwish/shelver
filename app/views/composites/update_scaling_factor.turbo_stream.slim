@@ -1,0 +1,16 @@
+- units = @units
+
+== turbo_stream.update 'scaling_factor' do
+  == render Geometry::ScaleComponent.new(scale: default_scale)
+  => link_to 'Adjust scale', composite_edit_scaling_factor_path(@composite), class: 'hover:underline text-orange-500'
+
+== turbo_stream.update 'bounding_box' do
+  - box = Geometry::BoundingBox.new(geometries: units.map { |unit| unit_geometry(unit:) })
+  == render Geometry::BoxDimensionsComponent.new(box:)
+
+== turbo_stream.update 'panel_list' do
+  - panels = PanelBuilder.panels_for(units)
+  == render Panels::ListComponent.new(panels:, name: @composite.name, show_details: false)
+
+== turbo_stream.update 'preview' do
+  == render Composites::PreviewComponent.new(composite: @composite)

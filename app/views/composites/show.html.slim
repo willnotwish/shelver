@@ -1,26 +1,25 @@
+- units = @units
+
 nav.mb-4
   => link_to 'List all', composites_path, class: 'hover:underline text-orange-500'
 
 == render PageTitleComponent.new(page_title: @composite.name)
 
-== render Geometry::ScaleComponent.new(scale: default_scale)
+== turbo_frame_tag('scaling_factor') do
+  == render Geometry::ScaleComponent.new(scale: default_scale)
+  => link_to 'Adjust scale', composite_edit_scaling_factor_path(@composite), class: 'hover:underline text-orange-500'
 
 .mt-8
   h4.font-bold Max dimensions (bounding box)
   .mt-4
-    - box = Geometry::BoundingBox.new(geometries: @units.map { |unit| unit_geometry(unit:) })
-    == render Geometry::BoxDimensionsComponent.new(box:)
+    == turbo_frame_tag 'bounding_box' do
+      - box = Geometry::BoundingBox.new(geometries: units.map { |unit| unit_geometry(unit:) })
+      == render Geometry::BoxDimensionsComponent.new(box:)
 
 .mt-8
   h4.mt-8.mb-4.font-bold Preview
-  / .w-full.h-2.bg-slate-300.mb-4.border-b.border-black
-  .border-t.border-slate-400.border-l.border-dashed
-    - @units.each do |unit|
-      .float-left
-        == link_to(unit) do
-          - geometry = unit_geometry(unit:)
-          == render Geometry::PreviewComponent.new(geometry:, label_prefix: unit.code)
-    .clear-left
+  == turbo_frame_tag 'preview' do
+    == render Composites::PreviewComponent.new(composite: @composite)
     
 .mt-8
   h4.mb-2
@@ -28,9 +27,9 @@ nav.mb-4
       ' Panels
     nav.inline-block.text-sm
       => link_to 'cutting list', [@composite, :panels, fmt: :csv], class: 'hover:underline text-orange-500'
-
-  - panels = PanelBuilder.panels_for(@units)
-  == render Panels::ListComponent.new(panels:, name: @composite.name, show_details: false)
+  == turbo_frame_tag 'panel_list' do
+    - panels = PanelBuilder.panels_for(units)
+    == render Panels::ListComponent.new(panels:, name: @composite.name, show_details: false)
 
 nav.mt-24
   h4.text-red-500.mt-8.border-t.pt-4 Danger zone

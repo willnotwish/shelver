@@ -1,6 +1,6 @@
 - require 'csv'
 
-- by_sheet = quantify_panels(panels: @panels)
+- by_sheet = quantify_panels(panels: @panels, scale: @scale)
 - title = @parent&.name || 'Units'
 - kerf = 2
 
@@ -11,5 +11,5 @@
     - csv << ['K', kerf]
     - csv << ['S', sheet.length, sheet.width, nil, nil]
     - hash.each do |key, quantity|
-      - csv << ['P', key.x, key.y, quantity, nil, nil]
+      - csv << ['P', key.scaled_x, key.scaled_y, quantity, nil, nil]
     // TODO: add comment

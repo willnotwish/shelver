@@ -11,6 +11,8 @@ class UnitsController < ApplicationController
   end
 
   def show
+    scaling_factor_from_session
+    @scale = @scaling_factor.value
     @kind = params[:kind] if params[:kind].present? # kind is an optional override
   end
 
@@ -84,5 +86,11 @@ class UnitsController < ApplicationController
       attrs['name'] = "#{attrs['name']} (duplicate)"
       attrs['code'] = "#{attrs['code']} (duplicate)"
     end
+  end
+
+  def scaling_factor_from_session
+    return @scaling_factor if @scaling_factor
+
+    @scaling_factor = ScalingFactor.from_session(session)
   end
 end

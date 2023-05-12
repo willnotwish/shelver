@@ -1,0 +1,8 @@
+h1.mb-4.text-xl.font-bold Set scale
+/ nav.my-4
+/   => link_to 'Cancel', root_path, class: 'text-orange-700 hover:underline'
+
+.mt-8.max-w-md
+  == turbo_frame_tag 'scaling_factor' do
+    == render partial: 'scaling_factor_form', object: @scaling_factor, as: :scaling_factor, locals: { url: composite_update_scaling_factor_path(@composite) }
+    == link_to 'Cancel', composite_path(@composite), class: 'text-orange-500 hover:underline'

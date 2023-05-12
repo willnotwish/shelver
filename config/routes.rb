@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   end
   resources :composites do
     resources :panels, only: :index
+    resource :scaling_factor, only: %i[edit update]
+    get 'edit-scaling-factor'
+    put 'update-scaling-factor'
   end
   resources :projects do
     resources :panels, only: :index

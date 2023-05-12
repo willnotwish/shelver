@@ -87,3 +87,5 @@ gem "factory_bot_rails", "~> 6.2", :groups => [:test, :development]
 gem "rspec-collection_matchers", "~> 1.2", :groups => [:test, :development]
 
 gem "view_component", "~> 2.82"
+
+gem "importmap-rails", "~> 1.1"

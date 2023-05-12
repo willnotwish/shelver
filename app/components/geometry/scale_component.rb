@@ -10,10 +10,8 @@ module Geometry
       @scale = scale
     end
 
-    NO_SCALING = 1
-
     def render?
-      scale != NO_SCALING
+      scale.present?
     end
   end
 end

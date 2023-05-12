@@ -1,0 +1,9 @@
+= simple_form_for(scaling_factor, url: url, method: :put) do |form_builder|
+  = form_builder.error_notification
+  = form_builder.error_notification message: form_builder.object.errors[:base].to_sentence if form_builder.object.errors[:base].present?
+
+  .form-inputs.mt-8
+    = form_builder.input :value
+
+  .form-actions.mt-4
+    = form_builder.button :submit, 'Update'

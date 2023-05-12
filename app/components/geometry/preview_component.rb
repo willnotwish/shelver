@@ -3,15 +3,17 @@
 module Geometry
   # A preview of a geometry
   class PreviewComponent < ViewComponent::Base
+    include Scalable
+
     with_collection_parameter :geometry
 
     attr_reader :geometry, :label_prefix
 
-    def initialize(geometry:, label_prefix: 'SET_ME', scaling_factor: 3.0)
+    def initialize(geometry:, label_prefix: 'SET_ME', css_scaling_factor: 3.0)
       super
       @geometry = geometry
       @label_prefix = label_prefix
-      @scaling_factor = scaling_factor
+      @css_scaling_factor = css_scaling_factor
     end
 
     delegate :shelf_count, to: :geometry
@@ -24,8 +26,12 @@ module Geometry
       "#{label_prefix}.T"
     end
 
+    def top_width
+      scale_and_round(geometry.unit_width)
+    end
+
     def dynamic_unit_style
-      "width: #{scale(geometry.unit_width)}px"
+      "width: #{css_scale(geometry.unit_width)}px"
     end
 
     def dynamic_style(kind: :shelf, index: nil)
@@ -39,7 +45,7 @@ module Geometry
           geometry.offset_bottom
         end
 
-      "height: #{scale(height)}px"
+      "height: #{css_scale(height)}px"
     end
 
     def shelf_void_height(_index)
@@ -48,13 +54,14 @@ module Geometry
 
     def shelf_y_pos(index)
       h0 = geometry.offset_top
-      h0 + (geometry.uniform_shelf_spacing * (index + 1))
+      pos = h0 + (geometry.uniform_shelf_spacing * (index + 1))
+      scale_and_round(pos)
     end
 
     private
 
-    def scale(length)
-      length/@scaling_factor
+    def css_scale(length)
+      length/@css_scaling_factor
     end
   end
 end
