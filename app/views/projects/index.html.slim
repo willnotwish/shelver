@@ -1,0 +1,13 @@
+= render PageTitleComponent.new(page_title: 'Projects')
+
+#projects
+  - @projects.each do |project|
+    h4.font-bold.text-lg.mb-2.border-b= project.name || 'Unnamed'
+    .grid.grid-cols-2
+      .mb-8
+        = render Projects::OverviewComponent.new(project:, name: false)
+      .mb-8
+        p TODO: sheet material usage here
+
+.nav-mt-8.border-t.py-4
+  = link_to 'New project', new_project_path, class: 'text-orange-500 hover:underline'

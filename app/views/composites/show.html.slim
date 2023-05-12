@@ -3,9 +3,6 @@ nav.mb-4
 
 = render PageTitleComponent.new(page_title: @composite.name)
 
-nav.mb-4
-  => link_to 'Export as CSV', [@composite, :panels, fmt: :csv], class: 'hover:underline text-orange-500'
-
 .mt-8
   / .w-full.h-2.bg-slate-300.mb-4.border-b.border-black
   .border-t.border-slate-400.border-l.border-dashed
@@ -21,8 +18,13 @@ nav.mb-4
     p #{@composite.max_width} (w) x #{@composite.max_height} (h) x #{@composite.max_depth} (d)
 
 .mt-8
-  h4.font-bold.mb-4 Panels
-  = render Composites::CuttingListComponent.new(composite: @composite)
+  h4.mb-2
+    span.font-bold
+      ' Panels
+    nav.inline-block.text-sm
+      => link_to 'cutting list', [@composite, :panels, fmt: :csv], class: 'hover:underline text-orange-500'
+
+  = render Panels::ListComponent.new(panels: PanelBuilder.panels_for(@composite.units), name: @composite.name, show_details: false)
 
 nav.mt-24
   h4.text-red-500.mt-8.border-t.pt-4 Danger zone
