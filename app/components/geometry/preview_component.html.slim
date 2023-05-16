@@ -1,8 +1,8 @@
-.grid.grid-cols-1.gap-2.px-2.bg-slate-400(style = dynamic_unit_style)
-  .bg-white.relative(style = dynamic_style(kind: :top_void))
-    .absolute.inset-x-0.bottom-0.text-center.text-xs #{top_width}
-  - shelf_count.times do |index|
-    .bg-white.relative(style = dynamic_style(kind: :shelf, index:))
-      .absolute.bottom-0.left-1.text-xs #{shelf_y_pos(index)}
-      .absolute.inset-x-0.bottom-0.text-center.text-xs #{shelf_label(index)}
-  .bg-white(style = dynamic_style(kind: :bottom_void))
+  .grid.grid-cols-1.gap-2.bg-slate-400(style = dynamic_unit_style)
+    .bg-white.relative(style = dynamic_style(kind: :top_void))
+      .absolute.inset-x-0.bottom-0.text-center.text-xs #{top_width}
+    - shelf_count.times do |index|
+      .bg-white.relative(style = dynamic_style(kind: :shelf, index:))
+        .absolute.bottom-0.left-1.text-xs #{shelf_y_pos(index)}
+        .absolute.inset-x-0.bottom-0.text-center.text-xs #{shelf_label(index)}
+    .bg-white(style = dynamic_style(kind: :bottom_void))

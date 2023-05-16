@@ -21,6 +21,9 @@
     h4.font-bold Sheet material required
     == render Geometry::SheetMaterialComponent.new(geometry:, sheet_material: @unit.sheet)
 
+.mt-4
+  == render UnitPreviewComponent.new(unit: @unit)
+
 .mt-12
   == render Geometry::PreviewComponent.new(geometry:, label_prefix: @unit.code)
 

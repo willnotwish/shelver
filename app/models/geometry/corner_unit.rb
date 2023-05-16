@@ -36,13 +36,21 @@ module Geometry
     end
     alias usable_shelf_area shelf_area
 
+    def left_side?
+      false
+    end
+
+    def right_side?
+      true
+    end
+
     private
 
     def shelf_width_and_depth
       @width_and_depth ||= width - sheet_thickness
     end
 
-    def cutout      
+    def cutout
       @cutout ||= width - sheet_thickness - depth # aka "x"
     end
   end

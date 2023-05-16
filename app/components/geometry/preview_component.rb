@@ -16,7 +16,7 @@ module Geometry
       @css_scaling_factor = css_scaling_factor
     end
 
-    delegate :shelf_count, to: :geometry
+    delegate :shelf_count, :left_side?, :right_side?, to: :geometry
 
     def shelf_label(index)
       "#{label_prefix}.S#{shelf_count - index}"
@@ -31,7 +31,10 @@ module Geometry
     end
 
     def dynamic_unit_style
-      "width: #{css_scale(geometry.unit_width)}px"
+      properties = ["width: #{css_scale(geometry.unit_width)}px"]
+      properties << 'padding-right: 0.5rem' if right_side?
+      properties << 'padding-left: 0.5rem' if left_side?
+      properties.join('; ')
     end
 
     def dynamic_style(kind: :shelf, index: nil)
@@ -61,7 +64,7 @@ module Geometry
     private
 
     def css_scale(length)
-      length/@css_scaling_factor
+      length / @css_scaling_factor
     end
   end
 end

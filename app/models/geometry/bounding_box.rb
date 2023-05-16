@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 module Geometry
+  # Units are placed side by side (horizontally, along the x-axis)
   class BoundingBox
     attr_reader :geometries
 
