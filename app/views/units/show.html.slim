@@ -22,10 +22,10 @@
     == render Geometry::SheetMaterialComponent.new(geometry:, sheet_material: @unit.sheet)
 
 .mt-4
-  == render UnitPreviewComponent.new(unit: @unit)
+  == render UnitPreviewComponent.new(geometry:)
 
-.mt-12
-  == render Geometry::PreviewComponent.new(geometry:, label_prefix: @unit.code)
+/ .mt-12
+/   == render Geometry::PreviewComponent.new(geometry:, label_prefix: @unit.code)
 
 .mt-8 
   h4.font-bold Usage

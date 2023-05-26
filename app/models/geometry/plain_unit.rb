@@ -41,23 +41,18 @@ module Geometry
 
     # Returns an array of Konva rectangles
     def front_elevation
-      x = 0
-      y = 0
-      lhs = Konva::Rect.new(x:, y:, width: sheet_thickness, height:)
+      rects = [Konva::Rect.new(x: 0, y: 0, width: sheet_thickness, height:)]
 
-      x += sheet_thickness
+      x = sheet_thickness
       y = offset_top
-      top = Konva::Rect.new(x:, y:, width: shelf_width, height: sheet_thickness)
+      rects << Konva::Rect.new(x:, y:, width: shelf_width, height: sheet_thickness)
 
-      delta = uniform_shelf_spacing
-      shelves = shelf_count.times.map do
-        Konva::Rect.new(x:, y: y += delta, width: shelf_width, height: sheet_thickness)
+      # void_height = uniform_shelf_spacing
+      shelf_count.times do
+        rects << Konva::Rect.new(x:, y: y += uniform_shelf_spacing, width: shelf_width, height: sheet_thickness)
       end
 
-      x += shelf_width
-      rhs = Konva::Rect.new(x:, y: 0, width: sheet_thickness, height:)
-
-      [lhs, top, shelves, rhs].flatten
+      rects << Konva::Rect.new(x: x + shelf_width, y: 0, width: sheet_thickness, height:)
     end
 
     def front_elevation_bounding_box
