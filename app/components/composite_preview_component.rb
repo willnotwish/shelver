@@ -2,7 +2,7 @@
 
 # Preview drawing of composite
 class CompositePreviewComponent < ViewComponent::Base
-  attr_reader :geometries, :scale
+  attr_reader :geometries
 
   def initialize(geometries:, scale: 0.4)
     super
@@ -14,9 +14,11 @@ class CompositePreviewComponent < ViewComponent::Base
     {
       controller: 'unit-preview-canvas',
       unit_preview_canvas_target: 'canvas',
-      unit_preview_canvas_groups_value: konva_groups,
-      unit_preview_canvas_scale_value: scale,
-      unit_preview_canvas_bounding_box_value: konva_bounding_box
+      unit_preview_canvas_groups_value:,
+      unit_preview_canvas_scale_value:,
+      unit_preview_canvas_bounding_box_value:,
+      unit_preview_canvas_margins_value:,
+      unit_preview_canvas_constraints_value:
     }
   end
 
@@ -26,21 +28,44 @@ class CompositePreviewComponent < ViewComponent::Base
 
   private
 
-  def konva_bounding_box
-    bounding_box = Geometry::BoundingBox.new(geometries:)
-    rect = Konva::Rect.new(
-      name: 'Bounding box',
-      width: bounding_box.width,
-      height: bounding_box.height,
-      x: 20,
-      y: 20
-    )
-
-    options = { foo: :bar, x_axis: true, y_axis: false }
-    options.merge(rect:)
+  def unit_preview_canvas_scale_value
+    @scale
   end
 
-  def konva_groups
+  def unit_preview_canvas_margins_value
+    { top: 180, left: 200, bottom: 20, right: 80 }
+  end
+
+  def unit_preview_canvas_constraints_value
+    cupboard_door = Konva::Rect.new(
+      name: 'Cupboard door',
+      width: 600,
+      height: 1800,
+      x: 0,
+      y: 2250 - 1800
+    )
+
+    desk = Konva::Rect.new(
+      name: 'Desk',
+      width: 1500,
+      height: 850,
+      x: 1200,
+      y: 2250 - 850
+    )
+
+    [cupboard_door, desk]
+  end
+
+  def unit_preview_canvas_bounding_box_value
+    bounds = Geometry::BoundingBox.new(geometries:)
+    Konva::Rect.new(
+      name: 'Bounding box',
+      width: bounds.width,
+      height: bounds.height
+    )
+  end
+
+  def unit_preview_canvas_groups_value
     # separation = 200
     # x = 0
     # y = 0
